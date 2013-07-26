@@ -1,0 +1,49 @@
+chatbox = peripheral.wrap('bottom')
+os.loadAPI('StrUtils')
+--[[APP_ID – идентификатор Вашего приложения;
+PERMISSIONS – запрашиваемые права доступа приложения;
+DISPLAY – внешний вид окна авторизации, поддерживаются: page, popup, touch и wap.
+REDIRECT_URI – адрес, на который будет передан access_token.
+API_VERSION – версия API, которую Вы используете. При повышении версии пожалуйста ознакомьтесь со списком изменений.]]
+local APP_ID = '3758018'
+local DISPLAY = 'mobile'
+local scope = 'friends,video,offline,messages,status,wall,groups'
+local apiVersion = '4.99'
+local redirectUrl = 'https://oauth.vk.com/blank.html'
+
+--[[local targetSite = 'https://oauth.vk.com/authorize?client_id='..APP_ID..'&scope='..scope..'&redirect_uri='..redirectUrl..'&display='..DISPLAY..'&v='..apiVersion..'&response_type=token'
+local handle = fs.open('blah','w')
+handle.write(targetSite)
+handle.close()]]
+
+local file = fs.open('debug_file','w')
+file.write(targetSite)
+file.close()
+
+local method = 'likes.add'
+local access_token = 'b10ba3bc727fa37b3918d6fa3d43bc2459b41f575e261b51dc3e51fa18fc5aebe0ef4557d10796ffe2fef'
+local TokenForArg = ('access_token='..access_token..'&')
+
+local arg = (TokenForArg..'type=post&owner_id=47764840&item_id=221')
+
+
+
+local handle = http.request('https://api.vk.com/method/'..method,arg)
+
+local requesting = true
+while requesting do
+    local event, url, sourceText = os.pullEvent()
+    if event == "http_success" then
+        local respondedText = sourceText.readAll()
+        if not respondedText == nil then
+            fileH = fs.open('blah','w')
+            fileH.write(respondedText)
+            fileH.close()
+        end
+        requesting = false
+    elseif event == "http_failure" then
+        print("Server didn't respond (Or something is wrong).")
+        requesting = false
+    end
+end
+
