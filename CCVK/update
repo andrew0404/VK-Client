@@ -1,0 +1,53 @@
+if not http then
+    error('HTTP is not enabled.')
+end
+
+function gettingVersion()
+    write('Connecting to GitHub... ')
+    local handle = http.request('https://raw.github.com/Sbotkin/VK-Client/master/version')
+    local requesting = true
+    while requesting do
+        local event, url, sourceText = os.pullEvent()
+        if event == "http_success" then
+            print('Connected!')
+            write('Loading version... ')
+            local onlineVersion = sourceText.readAll()
+            print(onlineVersion)            
+            requesting = false
+            return onlineVersion
+        elseif event == "http_failure" then
+            error("Server didn't respond (Or something is wrong).")
+            requesting = false
+        end
+    end
+    handle.close()
+end
+
+function update()
+    local handle = http.get('https://raw.github.com/Sbotkin/VK-Client/master/CCVK/code')
+    local get = handle.readAll()
+    local file = fs.open('CCVK/code','w')
+    file.write(code)
+    file.close()
+    handle.close()
+    
+    file = fs.open('CCVK/offlineVersion','w')
+    file.write(onlineVersion)
+    file.close()
+    handle.close()
+end
+local fileH = fs.open('CCVK/offlineVersion','r')
+local offlineVersion = fileH.readAll()
+fileH.close()
+
+onlineVersion = gettingVersion()
+
+write('Checking offline version... ')
+print(offlineVersion)
+if offlineVersion == onlineVersion then
+    print('Your program is already updated.')
+else
+    print('Going to update...')
+    update()
+end
+shell.run('CCVK/code')

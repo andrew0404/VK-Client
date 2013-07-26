@@ -46,4 +46,3 @@ while requesting do
         requesting = false
     end
 end
-
