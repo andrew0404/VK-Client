@@ -1,3 +1,4 @@
+
 function gettingOnLVersion()
     local handle = http.request('https://raw.github.com/Sbotkin/VK-Client/master/version')
     local requesting = true
@@ -27,11 +28,17 @@ function update()
     file.write(gettingOnLVersion())
     file.close()
     handle.close()
-    print('Updated!')
     
     local handle = http.get('https://raw.github.com/Sbotkin/VK-Client/master/VK')
     local get = handle.readAll()
     local file = fs.open('VK','w')
+    file.write(code)
+    file.close()
+    handle.close()
+    
+    local handle = http.get('https://raw.github.com/Sbotkin/VK-Client/master/CCVK/update')
+    local get = handle.readAll()
+    local file = fs.open('CCVK/update','w')
     file.write(code)
     file.close()
     handle.close()

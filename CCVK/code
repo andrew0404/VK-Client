@@ -3,7 +3,7 @@ onlineVersion = update.gettingOnLVersion()
 offlineVersion = update.gettingOffLVersion()
 if not (onlineVersion == offlineVersion) then
     write('Updating.. ')
-    update.update(onlineVersion)
+    update.update()
     print('Done!')
 else
     print('Already updated.')
