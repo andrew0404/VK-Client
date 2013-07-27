@@ -1,15 +1,8 @@
-if not http then
-    error('HTTP is not enabled.')
-end
-
-function gettingOnLVersion()
-    write('Connecting to GitHub... ')
     local handle = http.request('https://raw.github.com/Sbotkin/VK-Client/master/version')
     local requesting = true
     while requesting do
         local event, url, sourceText = os.pullEvent()
         if event == "http_success" then
-            print('Connected!')
             local version = sourceText.readAll()    
             requesting = false
             return version
@@ -42,15 +35,3 @@ function gettingOffLVersion()
     fileH.close()
     return version
 end
-
-print('Checking for new version.')
-onlineVersion = gettingOnLVersion()
-offlineVersion = gettingOffLVersion()
-
-if offlineVersion == onlineVersion then
-    print('Your program is already updated.')
-else
-    print('Going to update...')
-    update()  
-end
-shell.run('CCVK/code')

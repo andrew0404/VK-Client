@@ -1,1 +1,11 @@
-shell.run('CCVK/update')
+if not fs.exists('StrUtils') then
+    error('You need StrUtils for this program')
+end
+os.unloadAPI('StrUtils')
+os.loadAPI('StrUtils')
+if not http then
+    error('HTTP is not enabled.')
+end
+os.unloadAPI('CCVK/update')
+os.loadAPI('CCVK/update')
+shell.run('CCVK/code')

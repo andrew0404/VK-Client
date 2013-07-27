@@ -1,5 +1,16 @@
+print('Checking for updates!')
+onlineVersion = update.gettingOnLVersion()
+offlineVersion = update.gettingOffLVersion()
+if not (onlineVersion == offlineVersion) then
+    write('Updating.. ')
+    update.update(onlineVersion)
+    print('Done!')
+else
+    print('Already updated.')
+end
+
+
 chatbox = peripheral.wrap('bottom')
-os.loadAPI('StrUtils')
 --[[APP_ID – идентификатор Вашего приложения;
 PERMISSIONS – запрашиваемые права доступа приложения;
 DISPLAY – внешний вид окна авторизации, поддерживаются: page, popup, touch и wap.
@@ -28,9 +39,10 @@ local arg = (TokenForArg..'type=post&owner_id=47764840&item_id=221')
 
 
 
-local handle = http.request('https://api.vk.com/method/'..method,arg)
+--local handle = http.request('https://api.vk.com/method/'..method,arg)
 
-local requesting = true
+--local requesting = true
+local requesting = false
 while requesting do
     local event, url, sourceText = os.pullEvent()
     if event == "http_success" then
