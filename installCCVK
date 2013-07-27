@@ -3,12 +3,12 @@ if not http then
 end
 
 
--- local handle = http.get('https://raw.github.com/Sbotkin/VK-Client/master/CCVK/update')
--- local get = handle.readAll()
--- local file = fs.open('CCVK/update','w')
--- file.write(get)
--- file.close()
--- handle.close()
+local handle = http.get('https://raw.github.com/Sbotkin/VK-Client/master/CCVK/update')
+local get = handle.readAll()
+local file = fs.open('CCVK/update','w')
+file.write(get)
+file.close()
+handle.close()
 
 os.loadAPI('CCVK/update')
 
